@@ -6,4 +6,8 @@
 ## Implementation
 The game is completely done in JavaScript using an HTML canvas element. PHP is only used for writing and reading Highscores.
 
-[preview](web_snake.png)
+![preview](web_snake.png)
+### Layout
+- info panel on the left for showing controls, notes etc.
+- main game area containing the canvas to play in. The current score is shown in the top left corner.
+- highscores table
