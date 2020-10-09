@@ -13,4 +13,6 @@ The game is completely done in JavaScript using an HTML canvas element. PHP is o
 - highscores table
 
 ## Installation
-You will need a server (e.g. Apache) with PHP support for writing the highscores. 
+You will need a server (e.g. Apache) with PHP support for writing the highscores.
+## License
+[GNU General Public License 3](LICENSE)
