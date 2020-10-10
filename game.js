@@ -3,6 +3,7 @@ getTable();
 var canvas = document.getElementById("DrawingArea");
 // 2D-rendering context:
 var ctx = canvas.getContext("2d");
+var phpEnabled = false;
 
 var stop = false;
 var finish = false;
@@ -300,19 +301,23 @@ function sendName(){
   document.getElementById("popup").style.display = "none";
   var name = document.getElementById("name").value;
 
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("POST", "HighscoreHandle.php", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  var data = 'name=' + name + '&score=' + snake.length;
+  if(phpEnabled==true){
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "HighscoreHandle.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    var data = 'name=' + name + '&score=' + snake.length;
 
-  xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("highscores").innerHTML = this.responseText;
-          refresh();
-      }
-  };
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("highscores").innerHTML = this.responseText;
+            refresh();
+        }
+    };
 
-  xhttp.send(data);
+    xhttp.send(data);
+  }else{
+    document.getElementById("highscores").innerHTML = "<p>php disabled</p>";
+  }
 }
 
 function getTable(){
