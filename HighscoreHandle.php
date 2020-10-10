@@ -1,6 +1,4 @@
 <?php
-//TODO: writing to file not working
-//TODO: own protocol or writing to file fit for json?
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = htmlspecialchars($_POST['name']);
   $score = htmlspecialchars($_POST['score']);
@@ -18,8 +16,14 @@ function add_table_entry($new_name, $new_score){
   // create new object:
   $new_obj->name = $new_name;
   $new_obj->score = $new_score;
+
+  $objArray = get_scores_content();
   // convert to JSON object:
-  $new_entry = ',' . json_encode($new_obj) . ']';
+  if(count($objArray)>0){
+    $new_entry = ',' . json_encode($new_obj) . ']';
+  }else{
+      $new_entry = '[' . json_encode($new_obj) . ']';
+  }
   // write:
   if($fp = fopen("./scores.json", "c")){
     // go to EOF-1:
@@ -41,19 +45,18 @@ function cmp($a, $b)
     return ($a->score < $b->score) ? 1 : -1;
 }
 
+function get_scores_content(){
+  $fileContent = file_get_contents("scores.json");
+  return json_decode($fileContent, false);
+}
+
 function write_table(){
     write_table_head();
-    // $fileContent = '[' . file_get_contents("scores.json") . ']';
-    $fileContent = file_get_contents("scores.json");
-      $objArray = json_decode($fileContent, false);
-      // if(count($objArray)>1){
+      $objArray = get_scores_content();
         usort($objArray, "cmp");
         foreach ($objArray as $object){
           write_table_entry($object->name, $object->score);
         }
-      // }else{
-      //   write_table_entry($objArray->name, $objArray->score);
-      // }
     write_table_end();
 }
 
