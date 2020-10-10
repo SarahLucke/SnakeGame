@@ -321,16 +321,20 @@ function sendName(){
 }
 
 function getTable(){
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("GET", "HighscoreHandle.php", true);
+  if(phpEnabled==true){
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "HighscoreHandle.php", true);
 
-  xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("highscores").innerHTML = this.responseText;
-      }
-  };
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("highscores").innerHTML = this.responseText;
+        }
+    };
 
-  xhttp.send();
+    xhttp.send();
+  } else {
+    document.getElementById("highscores").innerHTML = "php disabled";
+  }
 }
 
 function closePopup(){
